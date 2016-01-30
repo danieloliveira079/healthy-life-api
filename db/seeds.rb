@@ -7,3 +7,5 @@
 ].each do |campaign_attributes|
   Campaign.create(campaign_attributes)
 end
+
+User.create(email: "xunda.user@example.org", password: "password")
