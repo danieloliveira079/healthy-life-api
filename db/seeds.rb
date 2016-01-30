@@ -1,7 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+[
+  { title: "Family Habits", active: true, description: "Get inspired by happy habits", interval: "01:00", category: "Family" },
+  { title: "Alcohool", active: false, description: "Stop drinking", interval: "01:30", category: "Alcohool" },
+  { title: "Stress", active: true, description: "Search inside yourself", interval: "00:30", category: "Daily Routine" },
+  { title: "Nutrition", active: true, description: "Eat beeter live better", interval: "01:10", category: "Diet" },
+  { title: "Cigars", active: false, description: "Stop smoking", interval: "02:00", category: "Bad Habits" }
+].each do |campaign_attributes|
+  Campaign.create(campaign_attributes)
+end
