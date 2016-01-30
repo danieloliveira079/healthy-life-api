@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe CampaignsController, type: :controller do
 
+it_behaves_like "api_controller"
+
 let(:valid_attributes) {
    { title: "Family Habits", active: true, description: "Get inspired by happy habits", interval: "00:30", category: "Family" }
  }
