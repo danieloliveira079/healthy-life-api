@@ -9,6 +9,11 @@ RSpec.describe Campaign, type: :model do
    it { is_expected.to have_db_column(:category).of_type(:string) }
    it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
    it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
+
+ end
+
+ describe "associations" do
+   it { is_expected.to belong_to(:user) }
  end
 
  describe "validations" do
@@ -16,5 +21,6 @@ RSpec.describe Campaign, type: :model do
    it { is_expected.to validate_presence_of(:description) }
    it { is_expected.to validate_presence_of(:interval) }
    it { is_expected.to validate_presence_of(:category) }
+   it { is_expected.to validate_presence_of(:user) }
  end
 end
