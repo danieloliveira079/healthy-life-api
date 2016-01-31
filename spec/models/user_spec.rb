@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
 
   describe "associations" do
     it { is_expected.to have_many(:authentication_tokens) }
+    it { is_expected.to have_many(:campaign) }
   end
 
   describe "secure password" do
