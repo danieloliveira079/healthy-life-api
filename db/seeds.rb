@@ -1,3 +1,4 @@
+user = User.create(email: "admin@example.com", password: "password")
 [
   { title: "Family Habits", active: true, description: "Get inspired by happy habits", interval: "01:00", category: "Family" },
   { title: "Alcohool", active: false, description: "Stop drinking", interval: "01:30", category: "Alcohool" },
@@ -5,7 +6,7 @@
   { title: "Nutrition", active: true, description: "Eat beeter live better", interval: "01:10", category: "Diet" },
   { title: "Cigars", active: false, description: "Stop smoking", interval: "02:00", category: "Bad Habits" }
 ].each do |campaign_attributes|
-  Campaign.create(campaign_attributes)
+  campaign = Campaign.new(campaign_attributes)
+  campaign.user = user
+  campaign.save
 end
-
-User.create(email: "xunda.user@example.org", password: "password")
