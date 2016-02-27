@@ -14,6 +14,10 @@ RSpec.describe SessionsController, type: :controller do
     { user: { email: user.email, password: "not-the-right-password" } }
   }
 
+  let(:new_user_valid_attributes) {
+    { user: { :email => "newuser@example.org", :password => "password" } }
+  }
+
   let(:parsed_response) { JSON.parse(response.body) }
 
   def set_auth_headers
@@ -23,6 +27,17 @@ RSpec.describe SessionsController, type: :controller do
 
   before do
     allow(TokenIssuer).to receive(:create_and_return_token).and_return(authentication_token.body)
+  end
+
+  describe "POST #signup" do
+    context "with valid email and password" do
+      before { post :signup, new_user_valid_attributes , format: :json  }
+
+      it { expect(response).to be_success }
+
+      it { expect(parsed_response["user_email"]).to eq(new_user_valid_attributes[:user][:email]) }
+    end
+
   end
 
   describe "POST #create" do
