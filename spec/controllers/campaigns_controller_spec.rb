@@ -5,7 +5,7 @@ RSpec.describe CampaignsController, type: :controller do
    it_behaves_like "api_controller"
    it_behaves_like "authenticated_api_controller"
 
-   let!(:user) { User.create(email: "user@example.com", password: "password") }
+   let!(:user) { User.create(email: "user1@example.com", password: "password") }
    let!(:campaign_with_user) {
       c = Campaign.create(valid_attributes_with_user)
    }
@@ -33,7 +33,7 @@ RSpec.describe CampaignsController, type: :controller do
 
    describe "GET #index" do
       it "assigns all campaigns as @campaigns" do
-        get :index, { format: :json }        
+        get :index, { format: :json }
         expect(assigns(:campaigns)).to eq(user_campaigns)
       end
     end

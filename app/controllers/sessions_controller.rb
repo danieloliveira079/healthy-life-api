@@ -33,4 +33,8 @@ class SessionsController < ApplicationController
       params.require(:user).permit(:email, :password)
     end
 
+    def user_exists?
+      User.find_by(email: session_params[:email])
+    end
+
 end
