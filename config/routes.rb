@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resource  :sessions,  only: [:create, :destroy]
   resources :campaigns, only: [:index, :show, :create, :update, :destroy]
 
+  post '/signup' => 'sessions#signup'
+
   match "/*path",
     to: proc {
       [
@@ -15,5 +17,5 @@ Rails.application.routes.draw do
         []
       ]
     }, via: [:options, :head]
-    
+
 end
