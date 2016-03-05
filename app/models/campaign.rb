@@ -3,4 +3,5 @@ class Campaign < ActiveRecord::Base
   validates_inclusion_of :active, in: [true, false]
 
   belongs_to :user
+  has_many :image, :dependent => :destroy
 end

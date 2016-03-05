@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227160610) do
+ActiveRecord::Schema.define(version: 20160305184935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 20160227160610) do
 
   add_index "campaigns", ["user_id"], name: "index_campaigns_on_user_id", using: :btree
 
+  create_table "images", force: :cascade do |t|
+    t.string   "path"
+    t.integer  "campaign_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "images", ["campaign_id"], name: "index_images_on_campaign_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "password_digest"
@@ -52,4 +61,5 @@ ActiveRecord::Schema.define(version: 20160227160610) do
 
   add_foreign_key "authentication_tokens", "users"
   add_foreign_key "campaigns", "users"
+  add_foreign_key "images", "campaigns"
 end

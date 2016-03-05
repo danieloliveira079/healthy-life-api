@@ -10,18 +10,57 @@ RSpec.describe CampaignsController, type: :controller do
       c = Campaign.create(valid_attributes_with_user)
    }
 
+   let(:image_with_campaign) {
+      i = Image.create({ path: '/temp/oldImage.png', campaign_id: campaign_with_user.id })
+   }
+
    let(:user_campaigns){ user.campaign }
 
    let(:valid_attributes) {
-      { title: "Family Habits", active: true, description: "Get inspired by happy habits", interval: "00:30", category: "Family" }
+      {
+         title: "Family Habits",
+         active: true,
+         description: "Get inspired by happy habits",
+         interval: "00:30",
+         category: "Family",
+         image: []
+       }
    }
 
    let(:valid_attributes_with_user) {
-      {user_id: user.id, title: "Family Habits", active: true, description: "Get inspired by happy habits", interval: "00:30", category: "Family" }
+      {
+         user_id: user.id,
+         title: "Family Habits",
+         active: true,
+         description: "Get inspired by happy habits",
+         interval: "00:30",
+         category: "Family",
+         image: []
+      }
    }
 
    let(:invalid_attributes) {
-      { title: nil, active: true, description: "Get inspired by happy habits", interval: "00:30", category: "Family" }
+      {
+         title: nil,
+         active: true,
+         description: "Get inspired by happy habits",
+         interval: "00:30",
+         category: "Family",
+         image: []
+      }
+   }
+
+   let(:campaign_with_image) {
+      {  title: "Family Habits",
+         active: true,
+         description: "Get inspired by happy habits",
+         interval: "00:30",
+         category: "Family",
+         image: [
+            { path: '/temp/test.png' },
+            { path: '/temp/test2.png' }
+         ]
+      }
    }
 
    before do
@@ -59,6 +98,12 @@ RSpec.describe CampaignsController, type: :controller do
           expect(assigns(:campaign)).to be_persisted
         end
 
+        it "creates a new Campaign with image" do
+           expect {
+            post :create, { campaign: campaign_with_image, format: :json  }
+         }.to change(Image, :count).by(2)
+        end
+
       end
 
       context "with invalid params" do
@@ -77,7 +122,14 @@ RSpec.describe CampaignsController, type: :controller do
     describe "PUT #update" do
       context "with valid params" do
         let(:new_attributes) do
-           { title: "Family Habits", active: false, description: "Get inspired by happy habits", interval: "01:00", category: "Family" }
+           {
+             title: "Family Habits",
+             active: false,
+             description: "Get inspired by happy habits",
+             interval: "01:00",
+             category: "Family",
+             image: [ path: '/temp/newTest.png']
+          }
         end
 
         it "updates the requested campaign" do
@@ -91,6 +143,13 @@ RSpec.describe CampaignsController, type: :controller do
           put :update, id: campaign_with_user.id, campaign: valid_attributes, format: :json
           expect(assigns(:campaign)).to eq(campaign_with_user)
         end
+
+        it "updates the requested campaign images" do
+           put :update, id: campaign_with_user.id, campaign: new_attributes, format: :json
+           campaign_with_user.reload
+           expect(campaign_with_user.image.count).to eq(1)
+        end
+
       end
 
       context "with invalid params" do
@@ -111,6 +170,12 @@ RSpec.describe CampaignsController, type: :controller do
         expect {
           delete :destroy, id: campaign_with_user.id, format: :json
        }.to change(Campaign, :count).by(-1)
+      end
+
+      it "destroys the referenced images" do
+         id = image_with_campaign.id         
+         delete :destroy, id: campaign_with_user.id, format: :json
+         expect(campaign_with_user.image.count).to eq(0)
       end
 
       it "redirects to the campaigns list" do
