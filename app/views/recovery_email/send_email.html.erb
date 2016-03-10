@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Olá <%= @user.email %></h1>
+    <p>
+      Você solicitou uma recuperação de senha do sistema.
+    </p>
+    <p>
+      A sua nova senha para acessar o aplicativo Healthy Life é: <b><%= @hash %></b>.
+    </p>
+    <p>
+      Agora você já pode entrar no site novamente e fazer o login informando a senha nova.
+    </p>
+  </body>
+</html>

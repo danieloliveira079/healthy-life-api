@@ -24,9 +24,16 @@ class SessionsController < ApplicationController
   end
 
   def recovery
-    if user_exists?
-      send_email @email
-      render status: :ok, json: ""
+    @user = user_exists?
+    if @user
+      @hash = new_hash
+      @user.password = @hash
+      if @user.save
+        send_email(@user, @hash)
+        render status: :ok, json: ""
+      else
+        render status: :unprocessable_entity, json: ""
+      end
     else
       render status: :unprocessable_entity, json: ""
     end
@@ -39,8 +46,13 @@ class SessionsController < ApplicationController
 
   private
 
-    def send_email email
-      
+    def new_hash
+      o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+      string = (0...8).map { o[rand(o.length)] }.join
+    end
+
+    def send_email(user, hash)
+      RecoveryEmail.send_email(user, hash).deliver_now
     end
 
     def session_params
