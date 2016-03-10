@@ -40,6 +40,23 @@ RSpec.describe SessionsController, type: :controller do
 
   end
 
+  describe "POST #recovery" do
+    context "with valid email" do
+      before { post :recovery, { user: { email: user.email }} , format: :json  }
+      it { expect(response).to be_success }
+    end
+
+  end
+
+  describe "POST #recovery" do
+    context "with invalid email" do
+      before { post :recovery, { user: { email: "xunda@example.org" }} , format: :json  }
+      it { expect(response.status).to eq(422) }
+    end
+
+  end
+
+
   describe "POST #create" do
     context "with valid credentials" do
       before { post :create, valid_attributes, format: :json  }
