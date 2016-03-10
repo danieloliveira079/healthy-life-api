@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :campaigns, only: [:index, :show, :create, :update, :destroy]
 
   post '/signup' => 'sessions#signup'
+  post '/recovery' => 'sessions#recovery'
 
   match "/*path",
     to: proc {
