@@ -11,6 +11,9 @@
 /tmp/
 /log/
 
+## Development Environment Variables used by dotenv gem
+.env
+
 ## Specific to RubyMotion:
 .dat*
 .repl_history
