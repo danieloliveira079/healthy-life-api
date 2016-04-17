@@ -27,6 +27,13 @@ RSpec.describe CampaignsController, type: :controller do
       end
     end
 
+    describe "GET #viewcampaign" do
+     it "assigns the requested campaign as @campaign" do
+      get :viewcampaign, { id: campaign_with_user.id, format: :json }
+      expect(assigns(:campaign)).to eq(campaign_with_user)
+     end
+  end
+
 end
 
 RSpec.describe CampaignsController, type: :controller do
