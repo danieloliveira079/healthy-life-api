@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post '/signup' => 'sessions#signup'
   post '/recovery' => 'sessions#recovery'
   get '/viewcampaigns' => 'campaigns#viewcampaigns'
+  get '/viewcampaign/:id' => 'campaigns#viewcampaign'
 
   match "/*path",
     to: proc {
