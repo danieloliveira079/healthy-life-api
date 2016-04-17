@@ -2,6 +2,35 @@ require 'rails_helper'
 
 RSpec.describe CampaignsController, type: :controller do
 
+   let(:valid_attributes_with_user) {
+      {
+         user_id: user.id,
+         title: "Family Habits",
+         active: true,
+         description: "Get inspired by happy habits",
+         interval: "00:30",
+         category: "Family",
+         image: []
+      }
+   }
+
+   let!(:user) { User.create(email: "user1@example.com", password: "password") }
+   let!(:campaign_with_user) {
+      c = Campaign.create(valid_attributes_with_user)
+   }
+   let(:user_campaigns){ user.campaign }
+
+   describe "GET #viewcampaigns" do
+      it "assigns all campaigns as @campaigns" do
+        get :viewcampaigns, { format: :json }
+        expect(assigns(:campaigns)).to eq(user_campaigns)
+      end
+    end
+
+end
+
+RSpec.describe CampaignsController, type: :controller do
+
    it_behaves_like "api_controller"
    it_behaves_like "authenticated_api_controller"
 
@@ -173,7 +202,7 @@ RSpec.describe CampaignsController, type: :controller do
       end
 
       it "destroys the referenced images" do
-         id = image_with_campaign.id         
+         id = image_with_campaign.id
          delete :destroy, id: campaign_with_user.id, format: :json
          expect(campaign_with_user.image.count).to eq(0)
       end

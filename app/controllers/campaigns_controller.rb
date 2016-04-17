@@ -1,4 +1,5 @@
 class CampaignsController < ApplicationController
+  skip_before_action :authenticate!, only: [:viewcampaigns]
   before_action :set_campaign, only: [:show, :update, :destroy]
   before_action :set_images, only: [:create, :update]
 
@@ -10,6 +11,11 @@ class CampaignsController < ApplicationController
   def show
     @campaign = current_user.campaign.where(id: params[:id]).first
     render json: @campaign
+  end
+
+  def viewcampaigns
+    @campaigns = Campaign.all
+    render json: @campaigns
   end
 
   def create

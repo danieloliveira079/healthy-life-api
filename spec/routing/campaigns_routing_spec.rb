@@ -6,4 +6,5 @@ RSpec.describe CampaignsController, type: :routing do
   it { expect(post:   "/campaigns").to   route_to("campaigns#create") }
   it { expect(put:    "/campaigns/1").to route_to("campaigns#update", id: "1") }
   it { expect(delete: "/campaigns/1").to route_to("campaigns#destroy", id: "1") }
+  it { expect(get:    "/viewcampaigns").to   route_to("campaigns#viewcampaigns") }
 end
