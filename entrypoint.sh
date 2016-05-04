@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Install dependencies
-bundle check > /dev/null 2>&1 || bundle install
+sleep 20
 
 # Create database
 has_db=$(psql -h $DATABASE_HOST -U postgres -lqt | cut -d \| -f 1 | grep -w healthy-api_development | wc -l )
